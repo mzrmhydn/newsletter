@@ -27,27 +27,40 @@ router.get("/auth/google",
 // /google sends user back
 
 router.get("/auth/google/callback",
-    passport.authenticate("google", {
-        successRedirect: baseUrl + frontendPort + "/success",
-        failureRedirect: baseUrl + frontendPort + "/fail"
+    passport.authenticate("google", { failureRedirect: baseUrl + frontendPort + "/fail" }),
+    (req, res) => {
+        if(req.user.wasAlreadyVerified){
+            res.redirect(`${baseUrl + frontendPort}?email=${req.user.user.email}`)
+        }
+        else {
+            res.redirect(baseUrl + frontendPort + "/success")
+        }
     })
-)
-
-// /for route protection
-
-router.get("/auth/status", (req, res) => {
-    if(req.isAuthenticated()){
-        res.json({ loggedIn: true , user: req.user })
-    }
-    else {
-        res.json({ loggedIn: false })
-    }
-})
 
 // /testing
 
 router.get("/",(req, res) => {
     res.send("CHAL RAHA HAI NIGGA! ✅")
+})
+
+// /alreadyverified
+
+router.get("/alreadyverified",async (req, res) => {
+    const {email} = req.query
+    if(!email){
+        return res.json({message: "Email is required", verified: false})
+    } 
+    try {
+        const user = await User.findOne({email})
+        if(user && user.verified){
+            return res.json({verified: true, message: "Email already verified."})
+        } else {
+            return res.json({verified: false, message: "Email not verified."})
+        }
+    } catch (err){
+        console.error(err)
+        return res.status(500).json({message: "Server error."})
+    }
 })
 
 // /signup

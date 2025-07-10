@@ -11,27 +11,32 @@ passport.use(new GoogleStrategy({
 },
 async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ googleId: profile.id})
         const existingUserByEmail = await User.findOne({email: profile.emails[0].value})
 
-        if(existingUser){
-            return done(null, existingUser)
-        }
-
         if(existingUserByEmail){
-            existingUserByEmail.googleId = profile.id
-            existingUserByEmail.verified = true 
-
-            await existingUserByEmail.save()
-            return done(null, existingUserByEmail)
+            const wasAlreadyVerified = existingUserByEmail.verified
+            if(!existingUserByEmail.verified){
+                existingUserByEmail.verified = true
+                await existingUserByEmail.save()
+            }
+            const response = {
+                user: existingUserByEmail,
+                wasAlreadyVerified: wasAlreadyVerified
+            }
+            return done(null, response)
         }
 
         const newUser = await User.create({
-            googleId: profile.id,
             email: profile.emails[0].value,
             verified: true
         })
-        return done(null, newUser)
+
+        const response = {
+            user: newUser,
+            wasAlreadyVerified: false
+        }
+
+        return done(null, response)
     } catch(error){
         return done(error,null)
     }
