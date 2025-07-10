@@ -1,0 +1,49 @@
+import express from 'express'
+import dotenv from "dotenv"
+import mongoose, { mongo } from 'mongoose'
+import cors from "cors"
+import authRoutes from "./routes/auth.js"
+import broadcastRoutes from "./routes/broadcast.js"
+import adminLoginRoutes from "./routes/adminlogin.js"
+import session from 'express-session'
+import passport from 'passport'
+import "./passport-setup.js"
+
+dotenv.config()
+const app = express();
+
+app.use(cors({
+    origin: process.env.BASE_URL + process.env.FRONTEND_PORT,
+    credentials: true
+}))
+
+app.use(express.json())
+
+const port = process.env.PORT || 3000
+
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log("Connected to MongoDB"))
+.catch((error) => console.error("Could not connect to MongoDB"))
+
+app.use(session({ 
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        sameSite: "lax",
+        secure: false
+    }
+}))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use("/", authRoutes)
+app.use("/", broadcastRoutes)
+app.use("/", adminLoginRoutes)
+
+
+app.listen(port, () => {
+    console.log(`Server is listening on the port ${port}`)
+})
