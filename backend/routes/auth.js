@@ -102,14 +102,6 @@ router.post("/verify", async (req, res) => {
     const { email,otp } = req.body
     const record = await User.findOne({email: email})
 
-    if(!record){
-        return res.status(400).json({message: "Email not found."})
-    }
-
-    if(record.verified){
-        return res.status(400).json({message: "Email already verified."})
-    }
-
     if(Date.now() > record.expiresAt){
         return res.status(400).json({message: "OTP expired."})
     }

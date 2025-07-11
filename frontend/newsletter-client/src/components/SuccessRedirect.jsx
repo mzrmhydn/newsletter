@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import newsletterlogo from "../newsletter logo.jpg"
 import { useNavigate } from "react-router-dom";
 

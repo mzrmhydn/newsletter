@@ -16,7 +16,7 @@ export default function SignupForm() {
 
   React.useEffect(() => {
     if(emailFromGoogle){
-      setMessage(`Welcome ${emailFromGoogle}, your email is already verified. ✅`)
+      setMessage(`${emailFromGoogle} is already verified. You will receive our newsletter.`)
     }
   })
 
@@ -97,7 +97,7 @@ export default function SignupForm() {
           <input
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="email"
-            placeholder="Enter your Email"
+            placeholder={isAdmin?"Enter admin Email": "Enter your Email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -128,7 +128,7 @@ export default function SignupForm() {
                 Sign up as Admin
               </label>
             </div>
-            <a
+            {!isAdmin && <a
               href={process.env.REACT_APP_GOOGLE_AUTH_URL}
               className="w-full"
             >
@@ -139,7 +139,7 @@ export default function SignupForm() {
                 <img className="w-8 h-8 mr-4" src={googleLogo} alt="google-logo" />
                 Sign Up with Google
               </button>
-            </a>
+            </a>}
           </div>
           {message && (
             <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
