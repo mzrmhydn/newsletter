@@ -1,31 +1,11 @@
-import React, { useEffect } from "react";
+import React from "react";
 import newsletterlogo from "../newsletter logo.jpg"
-import { replace, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function SuccessRedirect(){
-    const[user, setUser] = React.useState(null)
     const navigate = useNavigate()
     const baseUrl = process.env.REACT_APP_BASE_URL
     const backendPort = process.env.REACT_APP_BACKEND_PORT
-
-    useEffect(() => {
-        fetch(`${baseUrl + backendPort}/auth/status`, {
-            credentials: "include"
-        })
-        .then(res => res.json())
-        .then(data => {
-            if(!data.loggedIn){
-                navigate("/", { replace: true })
-            }
-            else {
-                setUser(data.user)
-            }
-        })
-        . catch((error) => {
-            console.error("Auth check failed: ", error)
-            navigate("/", { replace: true })
-        })
-    }, [])
 
     return(
         <>
@@ -46,9 +26,9 @@ export default function SuccessRedirect(){
                 <h1 className="text-3xl font-bold text-green-700">
                     🥳 Google Login Successful!
                 </h1>
-                {user? <p className="text-lg text-gray-700">
-                    Welcome {user.email}! You will now receive our newsletter.
-                </p>: <p className="text-gray-500"> Loading... </p>}
+                <p className="text-lg text-gray-700">
+                    You will now receive our newsletter on your registered Email.
+                </p>
             </div>
         </>
     )

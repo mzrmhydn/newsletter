@@ -23,6 +23,7 @@ export default function FailRedirect(){
                 <p className="text-gray-700 mt-4">
                     Something went wrong with Google Sign-In. Please try again.
                 </p>
+                <a className="text-blue-600 underline"  href="" onClick={() => navigate("/", { replace: true })}>👉🏼 Home Page.</a>
             </div>
         </>
     )
