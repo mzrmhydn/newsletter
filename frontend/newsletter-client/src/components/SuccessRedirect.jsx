@@ -4,8 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function SuccessRedirect(){
     const navigate = useNavigate()
-    const baseUrl = process.env.REACT_APP_BASE_URL
-    const backendPort = process.env.REACT_APP_BACKEND_PORT
     
     return(
         <>

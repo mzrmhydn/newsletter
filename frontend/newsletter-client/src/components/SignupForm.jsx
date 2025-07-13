@@ -9,8 +9,7 @@ export default function SignupForm() {
   const [isAdmin, setIsAdmin] = React.useState(false)
   const [adminPass, setAdminPass] = React.useState("")
   const navigate = useNavigate()
-  const baseUrl = process.env.REACT_APP_BASE_URL
-  const backendPort = process.env.REACT_APP_BACKEND_PORT
+  const backendURL = process.env.REACT_APP_BACKEND_URL
   const [searchParams] = useSearchParams()
   const emailFromGoogle = searchParams.get("email")
 
@@ -24,14 +23,14 @@ export default function SignupForm() {
     e.preventDefault()
     if (!isAdmin){
       try {
-        const verifyRes = await fetch(`${baseUrl+backendPort}/alreadyverified?email=${email}`)
+        const verifyRes = await fetch(`${backendURL}/alreadyverified?email=${email}`)
         const verifyData = await verifyRes.json()
         if(verifyData.verified){
           setMessage(`${email} is already verified. You will receive our newsletter.`)
           return
         }
 
-        const res = await fetch(baseUrl + backendPort + "/signup", {
+        const res = await fetch(backendURL + "/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email })
@@ -50,7 +49,7 @@ export default function SignupForm() {
       }
     } else {
       try {
-        const res = await fetch(baseUrl + backendPort + "/admin-login", {
+        const res = await fetch(backendURL + "/admin-login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password: adminPass })
