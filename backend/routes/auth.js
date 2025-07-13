@@ -8,8 +8,7 @@ import passport from "passport"
 dotenv.config()
 const router = express.Router()
 const port = process.env.PORT
-const frontendPort = process.env.FRONTEND_PORT
-const baseUrl = process.env.BASE_URL
+const frontendUrl = process.env.FRONTEND_URL
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -30,17 +29,17 @@ router.get("/auth/google/callback",
     passport.authenticate("google", { failureRedirect: baseUrl + frontendPort + "/fail" }),
     (req, res) => {
         if(req.user.wasAlreadyVerified){
-            res.redirect(`${baseUrl + frontendPort}?email=${req.user.user.email}`)
+            res.redirect(`${frontendUrl}?email=${req.user.user.email}`)
         }
         else {
-            res.redirect(baseUrl + frontendPort + "/success")
+            res.redirect(frontendUrl + "/success")
         }
     })
 
 // /testing
 
 router.get("/",(req, res) => {
-    res.send("CHAL RAHA HAI NIGGA! ✅")
+    res.send("CHAL RAHA HAI! ✅")
 })
 
 // /alreadyverified
