@@ -8,6 +8,7 @@ export default function VerifyForm() {
   const navigate = useNavigate()
   const location = useLocation()
   const email = location.state?.email
+  const backendURL = process.env.REACT_APP_BACKEND_URL
 
   React.useEffect(() => {
     if (!email) {
@@ -17,7 +18,7 @@ export default function VerifyForm() {
 
   const handleVerify = async (e) => {
     e.preventDefault()
-    const res = await fetch("http://localhost:3000/verify", {
+    const res = await fetch( backendURL + "/verify", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp })
