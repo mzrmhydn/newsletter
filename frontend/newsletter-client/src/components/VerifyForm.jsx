@@ -55,7 +55,7 @@ export default function VerifyForm() {
               VERIFY
             </button>
             {message && (
-              <p className="text-[#221a7b] text-sm ">{message}</p>
+              <p className={message === "Email verified successfully, you will now receive our newsletter at your registered email address."?  "text-green-600 text-sm " :  "text-red-600 text-sm "}>{message}</p>
             )}
           </div>
 
