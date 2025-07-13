@@ -6,7 +6,7 @@ export default function SuccessRedirect(){
     const navigate = useNavigate()
     const baseUrl = process.env.REACT_APP_BASE_URL
     const backendPort = process.env.REACT_APP_BACKEND_PORT
-
+    //conflicting comment
     return(
         <>
             <header className="flex justify-center items-center  bg-blue-600 h-32 shadow-md border-b">
