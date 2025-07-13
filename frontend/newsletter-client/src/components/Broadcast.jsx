@@ -8,6 +8,7 @@ export default function Broadcast() {
   const navigate = useNavigate()
   const location = useLocation()
   const isAdmin = location.state?.isAdmin
+  const backendURL = process.env.REACT_APP_BACKEND_URL
 
   React.useEffect(() => {
     if (!isAdmin) {
@@ -17,7 +18,7 @@ export default function Broadcast() {
 
   const sendBroadcast = async (e) => {
     e.preventDefault()
-    const res = await fetch("http://localhost:3000/broadcast", {
+    const res = await fetch(backendURL + "/broadcast", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ text })
