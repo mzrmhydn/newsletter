@@ -1,5 +1,5 @@
 import React from "react"
-import newsletterlogo from "../newsletter logo.jpg"
+import newsletterlogo from "../newsletter logo.png"
 import { useNavigate, useSearchParams } from "react-router-dom"
 import googleLogo from "../googlelogo.png"
 
@@ -71,81 +71,74 @@ export default function SignupForm() {
   }
 
   return (
-    <div>
-      <header className="flex justify-center items-center  bg-blue-600 h-32 shadow-md border-b">
-        <img
-          className="rounded-full w-20 h-20 mr-4"
-          src={newsletterlogo}
-          alt="newsletter-logo"
-        />
-        <button
-          onClick={() => navigate("/")}
-          className="text-3xl font-bold tracking-tight hover:text-slate-800 transition-colors"
-        >
-          Newsletter Signup
-        </button>
-      </header>
-
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
-        <form
-          className="w-full max-w-md bg-white rounded-2xl shadow-md p-8 mt-16 space-y-6 border"
-          onSubmit={handleSubmit}
-        >
-          <h2 className="text-2xl font-bold text-center text-slate-800">
-            Sign up as {isAdmin ? "Admin" : "User"}
+    <div className="flex bg-gradient-to-br from-[#2d033b] via-black to-[#1e3a8a] items-center justify-center h-screen px-4">
+      <form
+        className="flex w-[1200px] h-[600px] bg-white rounded-2xl shadow-lg"
+        onSubmit={handleSubmit}
+      >
+        <div className="w-3/5" >
+          <img className="h-full rounded-l-2xl place-self-center " src={newsletterlogo} alt="newsletter-logo" />
+        </div>
+        <div className="flex flex-col rounded-r-2xl justify-center bg-gray-100 p-8 w-2/5 h-full" >
+          <h2 className="text-3xl font-bold text-left text-[#221a7b] mb-0"> 
+            SIGN UP
           </h2>
+          <h2 className="mb-4 text-3xl font-bold text-left text-[#221a7b]">
+            {isAdmin ? "AS ADMIN TO BROADCAST" : "FOR OUR E-NEWSLETTER"}
+          </h2>
+          {!isAdmin && <p className="text-[#221a7b] text-sm mb-4">
+            Join our mailing list to stay in the loop with the latest updates, exclusive offers, and helpful tips—straight to your inbox.
+          </p>}
           <input
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-slate-300 placeholder-slate-500 placeholder:font-semibold w-3/4 mb-4 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-[#221a7b]"
             type="email"
-            placeholder={isAdmin?"Enter admin Email": "Enter your Email"}
+            placeholder={isAdmin?"Admin Email": "Your Email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
           {isAdmin && (
             <input
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-slate-300 placeholder-slate-500 placeholder:font-semibold w-3/4 mb-4 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-[#221a7b]"
               type="password"
-              placeholder="Enter admin password"
+              placeholder="Admin password"
               value={adminPass}
               onChange={(e) => setAdminPass(e.target.value)}
               required
             />
           )}
 
-          <div className="flex flex-col space-y-4 items-center justify-center">
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-transform transform hover:scale-105">
-              {isAdmin ? "Login as Admin" : "Get OTP"}
-            </button>
-            <div className="flex space-x-2">
-              <input
-                onChange={() => setIsAdmin((prev) => !prev)}
-                className="h-4 w-4 hover:scale-105 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                type="checkbox"
-                id="sign-up-as-admin"
-              />
-              <label htmlFor="sign-up-as-admin" className="text-sm text-gray-700">
-                Sign up as Admin
-              </label>
-            </div>
-            {!isAdmin && <a
-              href={process.env.REACT_APP_GOOGLE_AUTH_URL}
-              className="w-full"
+        
+          <button className="mb-4 w-fit  border-[#221a7b] border-2 bg-[#221a7b] hover:shadow-xl text-white px-4 py-2 rounded-full font-medium transition-transform transform hover:scale-105">
+            {isAdmin ? "Login as Admin" : "Submit"}
+          </button>
+          {!isAdmin && <a
+            href={process.env.REACT_APP_GOOGLE_AUTH_URL}
+          >
+            <button
+              type="button"
+              className="flex mb-4 border-[#221a7b] border-2 bg-[#221a7b] hover:shadow-xl text-white pr-3 pl-2 py-2 rounded-full font-medium transition-transform transform hover:scale-105"
             >
-              <button
-                type="button"
-                className="flex place-self-center border-2 border-black hover:shadow-xl hover:bg-slate-200 bg-gray-100 px-6 py-2 rounded-lg font-medium transition-transform transform hover:scale-105"
-              >
-                <img className="w-8 h-8 mr-4" src={googleLogo} alt="google-logo" />
-                Sign Up with Google
-              </button>
-            </a>}
+              <img className="w-6 h-6 mr-3" src={googleLogo} alt="google-logo" />
+              Sign Up with Google
+            </button>
+          </a>}
+          <div className="flex space-x-2">
+            <input
+              onChange={() => setIsAdmin((prev) => !prev)}
+              className="h-4 w-4 ml-2 rounded-full hover:scale-105 text-blue-600 border-gray-300 focus:ring-blue-500"
+              type="checkbox"
+              id="sign-up-as-admin"
+            />
+            <label htmlFor="sign-up-as-admin" className="text-sm text-gray-700">
+              Sign up as Admin
+            </label>
           </div>
           {message && (
-            <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
+            <p className="text-sm text-center text-red-600 mt-2">{message}</p>
           )}
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   )
 }

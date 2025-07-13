@@ -1,5 +1,5 @@
 import React from "react"
-import newsletterlogo from "../newsletter logo.jpg"
+import newsletterlogo from "../newsletter logo.png"
 import { useLocation, useNavigate } from "react-router-dom"
 
 export default function VerifyForm() {
@@ -27,47 +27,38 @@ export default function VerifyForm() {
   }
 
   return (
-    <div>
-      <header className="flex justify-center items-center  bg-blue-600 h-32 shadow-md border-b">
-        <img
-          className="rounded-full w-20 h-20 mr-4"
-          src={newsletterlogo}
-          alt="newsletter-logo"
-        />
-        <button
-          onClick={() => navigate("/")}
-          className="text-3xl font-bold tracking-tight hover:text-slate-800 transition-colors"
-        >
-          Newsletter Signup
-        </button>
-      </header>
-
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
+      <div className="flex bg-gradient-to-br from-[#2d033b] via-black to-[#1e3a8a] items-center justify-center h-screen px-4">
         <form
-          className="w-full max-w-md bg-white rounded-2xl shadow-md p-8 mt-16 space-y-6 border"
+          className="flex w-[1200px] h-[600px] bg-white rounded-2xl shadow-lg"
           onSubmit={handleVerify}
         >
-          <h1 className="text-2xl font-bold text-center text-slate-800">Verify Email</h1>
-          <p className="text-sm text-gray-600 text-center">An OTP has been sent to {email}</p>
+          <div className="w-3/5" >
+            <img className="h-full rounded-l-2xl place-self-center " src={newsletterlogo} alt="newsletter-logo" />
+          </div>
+          <div className="flex flex-col rounded-r-2xl justify-center bg-gray-100 p-8 w-2/5 h-full" >
+            <h2 className="text-3xl font-bold text-left text-[#221a7b] mb-4"> 
+              VERIFY EMAIL
+            </h2>
+            <p className="text-[#221a7b] text-sm mb-4">An OTP has been sent to {email}</p>
 
-          <input
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            type="text"
-            placeholder="Enter OTP"
-            value={otp}
-            onChange={(e) => setOtp(e.target.value)}
-            required
-          />
+            <input
+              className="bg-slate-300 placeholder-slate-500 placeholder:font-semibold w-3/4 mb-4 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-[#221a7b]"
+              type="text"
+              placeholder="Enter OTP"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              required
+            />
 
-          <button className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-transform transform hover:scale-105">
-            VERIFY
-          </button>
+            <button className="mb-4 w-fit  border-[#221a7b] border-2 bg-[#221a7b] hover:shadow-xl text-white px-4 py-2 rounded-full font-medium transition-transform transform hover:scale-105">
+              VERIFY
+            </button>
+            {message && (
+              <p className="text-[#221a7b] text-sm ">{message}</p>
+            )}
+          </div>
 
-          {message && (
-            <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
-          )}
         </form>
       </div>
-    </div>
   )
 }
