@@ -47,7 +47,7 @@ export default function VerifyForm() {
           className="w-full max-w-md bg-white rounded-2xl shadow-md p-8 mt-16 space-y-6 border"
           onSubmit={handleVerify}
         >
-          <h1 className="text-2xl font-bold text-center text-slate-800">Verify OTP</h1>
+          <h1 className="text-2xl font-bold text-center text-slate-800">Verify Email</h1>
           <p className="text-sm text-gray-600 text-center">An OTP has been sent to {email}</p>
 
           <input

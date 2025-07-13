@@ -1,6 +1,6 @@
 import React from "react"
 import newsletterlogo from "../newsletter logo.jpg"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import googleLogo from "../googlelogo.png"
 
 export default function SignupForm() {
@@ -11,12 +11,27 @@ export default function SignupForm() {
   const navigate = useNavigate()
   const baseUrl = process.env.REACT_APP_BASE_URL
   const backendPort = process.env.REACT_APP_BACKEND_PORT
+  const [searchParams] = useSearchParams()
+  const emailFromGoogle = searchParams.get("email")
+
+  React.useEffect(() => {
+    if(emailFromGoogle){
+      setMessage(`${emailFromGoogle} is already verified. You will receive our newsletter.`)
+    }
+  })
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!isAdmin) {
+    if (!isAdmin){
       try {
-        const res = await fetch(baseUrl + backendPort +"/signup", {
+        const verifyRes = await fetch(`${baseUrl+backendPort}/alreadyverified?email=${email}`)
+        const verifyData = await verifyRes.json()
+        if(verifyData.verified){
+          setMessage(`${email} is already verified. You will receive our newsletter.`)
+          return
+        }
+
+        const res = await fetch(baseUrl + backendPort + "/signup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email })
@@ -82,7 +97,7 @@ export default function SignupForm() {
           <input
             className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             type="email"
-            placeholder="Enter your Email"
+            placeholder={isAdmin?"Enter admin Email": "Enter your Email"}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -113,7 +128,7 @@ export default function SignupForm() {
                 Sign up as Admin
               </label>
             </div>
-            <a
+            {!isAdmin && <a
               href={process.env.REACT_APP_GOOGLE_AUTH_URL}
               className="w-full"
             >
@@ -124,7 +139,7 @@ export default function SignupForm() {
                 <img className="w-8 h-8 mr-4" src={googleLogo} alt="google-logo" />
                 Sign Up with Google
               </button>
-            </a>
+            </a>}
           </div>
           {message && (
             <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
