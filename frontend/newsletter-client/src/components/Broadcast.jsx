@@ -51,6 +51,7 @@ export default function Broadcast() {
           <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
         )}
         <a className="text-blue-600 underline place-self-end"  href="" onClick={() => navigate("/", { replace: true })}>Home Page.</a>
+        <p className="text-sm font-semibold self-end justify-self-start">Made by <a className="underline" href="https://www.linkedin.com/in/mazhar-mohyudin-6ab0b8260/">Mazhar Mohyudin</a></p>
       </form>
     </div>
   )
