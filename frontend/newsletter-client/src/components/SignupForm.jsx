@@ -136,7 +136,6 @@ export default function SignupForm() {
           {message && (
             <p className="text-sm text-center text-red-600 mt-2">{message}</p>
           )}
-          <p className="text-sm font-semibold place-self-end">Made by <a className="underline" href="https://www.linkedin.com/in/mazhar-mohyudin-6ab0b8260/">Mazhar Mohyudin</a></p>
         </div>
       </form>
     </div>

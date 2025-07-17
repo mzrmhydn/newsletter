@@ -16,7 +16,6 @@ export default function SuccessRedirect(){
                         You will now receive our newsletter on your registered Email.
                     </p>
                     <a className="text-blue-600 underline"  href="" onClick={() => navigate("/", { replace: true })}>👉🏼 Home Page.</a>
-                    <p className="text-sm font-semibold self-end justify-self-center">Made by <a className="underline" href="https://www.linkedin.com/in/mazhar-mohyudin-6ab0b8260/">Mazhar Mohyudin</a></p>
                 </div>
             </div> 
         </>
