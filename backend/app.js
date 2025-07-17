@@ -32,8 +32,3 @@ app.use(passport.session())
 app.use("/", authRoutes)
 app.use("/", broadcastRoutes)
 app.use("/", adminLoginRoutes)
-
-
-app.listen(port, () => {
-    console.log(`Server is listening on the port ${port}`)
-})
