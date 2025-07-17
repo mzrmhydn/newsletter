@@ -57,6 +57,7 @@ export default function VerifyForm() {
             {message && (
               <p className={message === "Email verified successfully, you will now receive our newsletter at your registered email address."?  "text-green-600 text-sm " :  "text-red-600 text-sm "}>{message}</p>
             )}
+            <a className="text-blue-600 underline place-self-end"  href="" onClick={() => navigate("/", { replace: true })}>Home Page.</a>
           </div>
 
         </form>

@@ -50,6 +50,7 @@ export default function Broadcast() {
         {message && (
           <p className="text-sm text-center text-gray-500 mt-2">{message}</p>
         )}
+        <a className="text-blue-600 underline place-self-end"  href="" onClick={() => navigate("/", { replace: true })}>Home Page.</a>
       </form>
     </div>
   )
